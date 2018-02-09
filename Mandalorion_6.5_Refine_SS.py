@@ -16,11 +16,11 @@ def parse_genome(input_file,left_bounds,right_bounds):
         a=line.strip().split('\t')
         if len(a)>7:
              if a[2]=='exon':
-			     tid=a[8].split('; transcript_id "')[1].split('"')[0]
-				 #Human GENCODE GTF contains underscore-separated versions
-				 #which mess with downstream code and lead to errors
-				 #Stripping them at import. - Alex Ishkin
-				 tid=tid.split('_')[0]
+                 tid=a[8].split('; transcript_id "')[1].split('"')[0]
+                 #Human GENCODE GTF contains underscore-separated versions
+                 #which mess with downstream code and lead to errors
+                 #Stripping them at import. - Alex Ishkin
+                 tid=tid.split('_')[0]
                  try: 
                      gene_dict[tid].append((a[0],a[3],a[4]))
                  except:
