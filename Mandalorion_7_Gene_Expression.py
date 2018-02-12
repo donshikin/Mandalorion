@@ -56,8 +56,13 @@ def parse_genome_annotation(genome_annotation):
                 start=int(a[3])
                 end=int(a[4])
                 chromosome=a[0]
-                gene_name=a[8].split('gene_id "')[1].split('"')[0]+'_'+chromosome
-
+                gene_name=a[8].split('gene_id "')[1].split('"')[0]
+                #Human GENCODE GTF contains underscore-separated versions
+                #which mess with downstream code and lead to errors
+                #Stripping them at import. - Alex Ishkin
+                gene_name=gene_name.split('_')[0]
+                gene_name=gene_name+'_'+chromosome
+                
                 try:
                     gene_start=gene_data[gene_name][0][1]
                     gene_end=gene_data[gene_name][0][2]
