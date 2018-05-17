@@ -44,9 +44,13 @@ def collect_file_paths(path,gene_file):
    isoform_list=[]
    gene_read_counter={}
    isoform_read_counter={}
+   
+   ##As list of files in parsed_reads changes with every processed gene, it doesn't feel like a good idea 
+   ##to use it in for cycle every time (if many genes refer to the same isoform, many files are created with _sub_sub_sub... indices)
+   fastafiles = sorted(os.listdir(path+'/parsed_reads'))
    for gene in genes_of_interest:
        gene_read_counter[gene]=0
-       for file1 in sorted(os.listdir(path+'/parsed_reads')):
+       for file1 in fastafiles:
            if gene in file1:
                
                file2=file1+'_sub'
@@ -100,7 +104,7 @@ def run_poa(isoform_list,out,cutoff,gene_read_counter,isoform_read_counter):
             print(i)
             reads=read_fasta(PIR)
             print(len(reads))
-            os.system('rm '+FASTA)
+            ##os.system('rm '+FASTA) in real life this file is requested over and over (I guess because multiple genes refer to the same isoform) and the step crashes
             for read in reads:
                 if read == 'CONSENS0':
                   
